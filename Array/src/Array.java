@@ -25,11 +25,12 @@ public class Array<E> {
     }
     // 在第index个位置插入一个元素e
     public void add(int index, E e) {
-        if(size == data.length)
-            throw new IllegalArgumentException("Add failed. Array is full.");
+
         if(index < 0 || index > size)
             throw new IllegalArgumentException("Add failed. Required index >=0 && index <= size.");
-
+        // 当数组容量不够时，对数组进行扩容，这里扩容为以前容量的2倍
+        if(size == data.length)
+            resize(2 * data.length);
         for(int i = size-1; i >= index; i--)
             data[i+1] = data[i];
         data[index] = e;
@@ -85,6 +86,9 @@ public class Array<E> {
             data[i-1] = data[i];
         size--;
         data[size] = null; // loitering objects存在，并不意味着memory leak. 这一行使得java的垃圾回收机制起作用，这句不是必须的
+        // 当前元素个数小于一定值时，对数组容量进行缩小
+        if(size == data.length / 2)
+            resize(data.length/2);
         return ret;
     }
     // 从数组中删除第一个元素，返回删除的元素
@@ -114,5 +118,12 @@ public class Array<E> {
         }
         res.append(']');
         return res.toString();
+    }
+
+    private void resize(int newCapacity){
+        E[] newData = (E[])new Object[newCapacity];
+        for(int i = 0; i < size; i++)
+            newData[i] = data[i];
+        data = newData;
     }
 }
