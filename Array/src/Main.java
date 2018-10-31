@@ -17,7 +17,7 @@ public class Main {
             System.out.println(score);
         */
         // 使用自定义数组类Array
-        Array arr = new Array(20);
+        Array<Integer> arr = new Array<>(20); // int类型的包装类是Integer
         for(int i = 0; i < 10; i++)
             arr.addLast(i);
         System.out.println(arr);
