@@ -87,7 +87,8 @@ public class Array<E> {
         size--;
         data[size] = null; // loitering objects存在，并不意味着memory leak. 这一行使得java的垃圾回收机制起作用，这句不是必须的
         // 当前元素个数小于一定值时，对数组容量进行缩小
-        if(size == data.length / 2)
+        // 这里使用了Lazy策略来缩小数组容量
+        if(size == data.length / 4 && data.length / 2 != 0)
             resize(data.length/2);
         return ret;
     }
