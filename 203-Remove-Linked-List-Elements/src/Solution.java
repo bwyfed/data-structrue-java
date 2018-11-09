@@ -21,9 +21,10 @@ class Solution {
         ListNode prev = head;
         while(prev.next != null) { // 遍历到最后一个节点之前的节点
             if(prev.next.val == val) { // 处理到最后一个节点
-                ListNode delNode = prev.next;
-                prev.next = delNode.next;
-                delNode.next = null;
+//                ListNode delNode = prev.next;
+//                prev.next = delNode.next;
+//                delNode.next = null;
+                prev.next = prev.next.next;
             } else {
                 prev = prev.next;
             }
