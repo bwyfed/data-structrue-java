@@ -4,6 +4,7 @@ public class Array<E> {
     // 构造函数，传入数组的容量capacity来构造Array
     public Array(int capacity) {
 //        data = new int[capacity];
+        // Java不支持new E[capacity]，不支持泛型类型的数据
         data = (E[])new Object[capacity];
         size = 0;
     }
@@ -28,7 +29,7 @@ public class Array<E> {
 
         if(index < 0 || index > size)
             throw new IllegalArgumentException("Add failed. Required index >=0 && index <= size.");
-        // 当数组容量不够时，对数组进行扩容，这里扩容为以前容量的2倍
+        // 当数组容量不够时，对数组进行扩容，这里将容量扩容为当前数组中已有元素个数的2倍
         if(size == data.length)
             resize(2 * data.length);
         for(int i = size-1; i >= index; i--)
@@ -84,10 +85,12 @@ public class Array<E> {
         E ret = data[index];
         for(int i = index + 1; i < size; i++)
             data[i-1] = data[i];
-        size--;
+        size--; // 记得维护size的值
         data[size] = null; // loitering objects存在，并不意味着memory leak. 这一行使得java的垃圾回收机制起作用，这句不是必须的
-        // 当前元素个数小于一定值时，对数组容量进行缩小
-        // 这里使用了Lazy策略来缩小数组容量
+        // 当前元素个数小于一定值(假设空间有一半剩余)时，对数组容量进行缩小
+//        if(size == data.length / 2)
+//            resize(data.length / 2);
+        // 这里使用了Lazy策略来缩小数组容量，当size === capacity/4时，才将capacity减半
         if(size == data.length / 4 && data.length / 2 != 0)
             resize(data.length/2);
         return ret;
@@ -100,7 +103,7 @@ public class Array<E> {
     public E removeLast() {
         return remove(size-1);
     }
-    // 从数组中删除元素e(删除第一个e元素)
+    // 从数组中删除元素e(删除第一个e元素)。用户在删除e时，已经知道要删除的元素，因此不用返回被删除的元素了
     public void removeElement(E e) {
         int index = find(e);
         if (index != -1)
