@@ -14,7 +14,7 @@ public class Main {
         return (endTime - startTime) / 1000000000.0;
     }
     public static void main(String[] args) {
-        int opCount = 1000000; // 操作次数
+        int opCount = 100000; // 操作次数
 
         ArrayQueue<Integer> arrayQueue = new ArrayQueue<>();
         double time1 = testQueue(arrayQueue, opCount);
