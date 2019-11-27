@@ -50,6 +50,12 @@ public class Array<E> {
             throw new IllegalArgumentException("Get failed. Index is illegal.");
         return data[index];
     }
+    public E getLast() {
+        return get(size-1);
+    }
+    public E getFirst() {
+        return get(0);
+    }
     // 修改index所以位置的元素为e
     void set(int index, E e) {
         if(index < 0 || index >= size)
@@ -81,8 +87,8 @@ public class Array<E> {
             data[i-1] = data[i];
         size--;
         data[size] = null; // loitering object != memory leak. 使得GC回收该对象
-        // 缩容
-        if(size == data.length / 2)
+        // 缩容:使用Lazy策略
+        if(size == data.length / 4 && data.length / 2 != 0)
             resize(data.length /2 );
         return ret;
     }

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Array<E> {
     private E[] data;
     private int size; // 有多少个有效的元素
@@ -48,7 +50,6 @@ public class Array<E> {
             throw new IllegalArgumentException("Get failed. Index is illegal.");
         return data[index];
     }
-    // 为栈操作新增的方法
     public E getLast() {
         return get(size-1);
     }
@@ -86,8 +87,8 @@ public class Array<E> {
             data[i-1] = data[i];
         size--;
         data[size] = null; // loitering object != memory leak. 使得GC回收该对象
-        // 缩容
-        if(size == data.length / 2)
+        // 缩容:使用Lazy策略
+        if(size == data.length / 4 && data.length / 2 != 0)
             resize(data.length /2 );
         return ret;
     }
