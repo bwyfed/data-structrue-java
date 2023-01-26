@@ -7,7 +7,8 @@ public class Main3 {
         int n = 20000000; // 2千万个数据
 
         ArrayList<Integer> testData = new ArrayList<>();
-        for(int i = 0; i < n; i++)
+//        for(int i = 0; i < n; i++)
+        for(int i = n; i > 0; i--)
             testData.add(i);
 
         // Test BST
