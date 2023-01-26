@@ -12,4 +12,16 @@ class Solution {
 
         return -1;
     }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        StringBuilder sb1 = new StringBuilder("leetcode");
+        int count1 =  solution.firstUniqChar(sb1.toString());
+        System.out.println(sb1.toString() + ": " + count1);
+
+        StringBuilder sb2 = new StringBuilder("loveleetcode");
+        int count2 =  solution.firstUniqChar(sb2.toString());
+        System.out.println(sb2.toString() + ": " + count2);
+    }
 }
