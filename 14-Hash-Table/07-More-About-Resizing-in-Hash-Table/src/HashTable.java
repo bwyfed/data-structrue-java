@@ -9,14 +9,14 @@ public class HashTable<K extends Comparable<K>, V> {
 
     private static final int upperTol = 10;
     private static final int lowerTol = 2;
-    private int capacityIndex = 0;
+    private int capacityIndex = 0; // 初始的时候，初始的容量是capacity[capacityIndex]的数字
 
     private TreeMap<K, V>[] hashtable;
     private int size;
     private int M;
 
     public HashTable(){
-        this.M = capacity[capacityIndex];
+        this.M = capacity[capacityIndex]; // 初始容量
         size = 0;
         hashtable = new TreeMap[M];
         for(int i = 0 ; i < M ; i ++)
@@ -38,9 +38,9 @@ public class HashTable<K extends Comparable<K>, V> {
         else{
             map.put(key, value);
             size ++;
-
-            if(size >= upperTol * M && capacityIndex + 1 < capacity.length){
-                capacityIndex ++;
+            // 扩容.把除法转换为乘法。还要判断扩容的地址大小，最大是达到capacity最后一个数字的大小
+            if(size >= upperTol * M && capacityIndex + 1 < capacity.length) {
+                capacityIndex++;
                 resize(capacity[capacityIndex]);
             }
         }
@@ -52,9 +52,9 @@ public class HashTable<K extends Comparable<K>, V> {
         if(map.containsKey(key)){
             ret = map.remove(key);
             size --;
-
-            if(size < lowerTol * M && capacityIndex - 1 >= 0){
-                capacityIndex --;
+            // 缩容. 缩容不能小于initCapacity
+            if(size < lowerTol * M && capacityIndex - 1 >= 0) {
+                capacityIndex--;
                 resize(capacity[capacityIndex]);
             }
         }
@@ -83,7 +83,7 @@ public class HashTable<K extends Comparable<K>, V> {
             newHashTable[i] = new TreeMap<>();
 
         int oldM = M;
-        this.M = newM;
+        this.M = newM; // 因为hash()方法要用到M，因此这里要提前更新，保证计算hash值的正确性
         for(int i = 0 ; i < oldM ; i ++){
             TreeMap<K, V> map = hashtable[i];
             for(K key: map.keySet())
