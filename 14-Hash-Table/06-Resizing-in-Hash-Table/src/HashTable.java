@@ -5,7 +5,7 @@ public class HashTable<K, V> {
 
     private static final int upperTol = 10;
     private static final int lowerTol = 2;
-    private static final int initCapacity = 7;
+    private static final int initCapacity = 7; // 初始容量
 
     private TreeMap<K, V>[] hashtable;
     private int size;
@@ -38,7 +38,7 @@ public class HashTable<K, V> {
         else{
             map.put(key, value);
             size ++;
-
+            // 扩容.把除法转换为乘法
             if(size >= upperTol * M)
                 resize(2 * M);
         }
@@ -50,7 +50,7 @@ public class HashTable<K, V> {
         if(map.containsKey(key)){
             ret = map.remove(key);
             size --;
-
+            // 缩容. 缩容不能小于initCapacity
             if(size < lowerTol * M && M / 2 >= initCapacity)
                 resize(M / 2);
         }
@@ -79,7 +79,7 @@ public class HashTable<K, V> {
             newHashTable[i] = new TreeMap<>();
 
         int oldM = M;
-        this.M = newM;
+        this.M = newM; // 因为hash()方法要用到M，因此这里要提前更新，保证计算hash值的正确性
         for(int i = 0 ; i < oldM ; i ++){
             TreeMap<K, V> map = hashtable[i];
             for(K key: map.keySet())
