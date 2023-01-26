@@ -3,8 +3,8 @@ import java.util.TreeMap;
 public class HashTable<K, V> {
 
     private TreeMap<K, V>[] hashtable;
-    private int size;
-    private int M;
+    private int size; // 当前存储了多少元素
+    private int M; // hash表有多少个位置
 
     public HashTable(int M){
         this.M = M;
